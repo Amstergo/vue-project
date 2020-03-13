@@ -19,9 +19,10 @@ export default new VueRouter({
       component: Home
     },
     {
-      path: "/ad/:ad",
+      path: "/ad/:id",
       name: "ad",
-      component: Ad
+      component: Ad,
+      props: true
     },
     {
       path: "/list",
