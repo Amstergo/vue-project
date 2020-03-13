@@ -1,4 +1,25 @@
+import * as fb from "firebase";
+
+class Ad {
+  constructor(
+    title,
+    description,
+    ownerId,
+    imageSrc = "",
+    id = null,
+    promo = false
+  ) {
+    this.title = title;
+    this.description = description;
+    this.ownerId = ownerId;
+    this.imageSrc = imageSrc;
+    this.id = id;
+    this.promo = promo;
+  }
+}
+
 export default {
+  namespaced: true,
   state: {
     ads: [
       {
@@ -30,10 +51,30 @@ export default {
     }
   },
   actions: {
-    createAd({ commit }, payload) {
-      payload.id = Math.random().toString();
+    async createAd({ commit, rootGetters }, payload) {
+      commit("common/clearError", payload, { root: true });
+      commit("common/setLoading", true, { root: true });
 
-      commit("createAd", payload);
+      try {
+        const newAd = new Ad(
+          payload.title,
+          payload.description,
+          rootGetters.user.id,
+          payload.imageSrc,
+          payload.promo
+        );
+        const fbValue = await fb
+          .database()
+          .ref("ads")
+          .push(newAd);
+        console.log(fbValue);
+      } catch (e) {
+        commit("common/setError", e.message, { root: true });
+        commit("common/setLoading", false, { root: true });
+        console.log(rootGetters);
+
+        throw e;
+      }
     }
   },
   getters: {

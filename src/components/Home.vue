@@ -5,7 +5,7 @@
         <v-flex xs12>
           <v-carousel>
             <v-carousel-item
-              v-for="ad of promoAds"
+              v-for="ad of promoAdsList"
               :key="ad.id"
               :src="ad.imageSrc"
               reverse-transition="fade-transition"
@@ -21,7 +21,7 @@
     </v-container>
     <v-container grid-list-lg>
       <v-layout row>
-        <v-flex xs12 sm6 md4 v-for="ad of ads" :key="ad.id">
+        <v-flex xs12 sm6 md4 v-for="ad of adsList" :key="ad.id">
           <v-card class="mx-auto" max-width="400">
             <v-img
               class="white--text align-end"
@@ -53,13 +53,16 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   computed: {
-    promoAds() {
-      return this.$store.getters.promoAds;
+    ...mapGetters("ads", ["promoAds", "ads"]),
+    promoAdsList() {
+      return this.promoAds;
     },
-    ads() {
-      return this.$store.getters.ads;
+    adsList() {
+      return this.ads;
     }
   }
 };

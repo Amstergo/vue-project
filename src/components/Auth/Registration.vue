@@ -60,6 +60,8 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   data() {
     return {
@@ -89,16 +91,19 @@ export default {
           password: this.password
         };
 
-        this.$store.dispatch("registerUser", user);
+        this.$store
+          .dispatch("user/registerUser", user)
+          .then(() => {
+            this.$router.push("/");
+          })
+          .catch(() => {});
 
         console.log(user);
       }
     }
   },
   computed: {
-    loading() {
-      return this.$store.getters.loading;
-    }
+    ...mapGetters("common", ["loading"])
   }
 };
 </script>

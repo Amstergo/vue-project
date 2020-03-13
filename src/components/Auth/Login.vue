@@ -33,7 +33,11 @@
               </v-card-text>
               <v-card-actions>
                 <v-spacer />
-                <v-btn color="primary" @click="onSubmit" :disabled="!valid"
+                <v-btn
+                  color="primary"
+                  @click="onSubmit"
+                  :disabled="!valid"
+                  :loading="loading"
                   >Login</v-btn
                 >
               </v-card-actions>
@@ -46,6 +50,8 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   data() {
     return {
@@ -62,6 +68,9 @@ export default {
       ]
     };
   },
+  computed: {
+    ...mapGetters("common", ["loading"])
+  },
   methods: {
     onSubmit() {
       if (this.$refs.form.validate()) {
@@ -70,8 +79,21 @@ export default {
           password: this.password
         };
 
-        console.log(user);
+        this.$store
+          .dispatch("user/loginUser", user)
+          .then(() => {
+            this.$router.push("/");
+          })
+          .catch(() => {});
       }
+    }
+  },
+  created() {
+    if (this.$route.query["loginError"]) {
+      this.$store.dispatch(
+        "common/setError",
+        "Please log in to access this page."
+      );
     }
   }
 };

@@ -3,7 +3,7 @@
     <v-layout row>
       <v-flex xs12 sm6 offset-sm3>
         <h1 class="text--secondary mb-3">My ads</h1>
-        <v-card class="elevation-10 mb-5" v-for="ad in myAds" :key="ad.id">
+        <v-card class="elevation-10 mb-5" v-for="ad in myAdsList" :key="ad.id">
           <v-layout row>
             <v-flex xs4>
               <v-img :src="ad.imageSrc" height="160px"> </v-img>
@@ -26,10 +26,13 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   computed: {
-    myAds() {
-      return this.$store.getters.myAds;
+    ...mapGetters("ads", ["myAds"]),
+    myAdsList() {
+      return this.myAds;
     }
   }
 };

@@ -4,7 +4,7 @@
       <v-flex xs12 sm6 offset-sm3>
         <h1 class="text--secondary mb-3">Orders</h1>
         <v-list subheader two-line flat>
-          <v-list-item-group v-model="settings" multiple>
+          <v-list-item-group multiple>
             <v-list-item v-for="order in orders" :key="order.id">
               <v-list-item-action>
                 <v-checkbox
@@ -40,7 +40,7 @@ export default {
         done: false
       },
       {
-        id: "asd",
+        id: "as2d",
         name: "John",
         phone: "8-921-233-22-22",
         adId: "123",

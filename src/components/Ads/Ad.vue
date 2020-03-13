@@ -22,13 +22,15 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   props: ["id"],
   computed: {
+    ...mapGetters("ads", ["adById"]),
     ad() {
       const id = this.id;
-      console.log(id);
-      return this.$store.getters.adById(id);
+      return this.adById(id);
     }
   }
 };

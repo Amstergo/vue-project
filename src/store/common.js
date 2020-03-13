@@ -1,9 +1,10 @@
 export default {
+  namespaced: true,
   state: {
     loading: false,
     error: null
   },
-  mutation: {
+  mutations: {
     setLoading(state, payload) {
       state.loading = payload;
     },
