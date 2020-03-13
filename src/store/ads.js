@@ -59,7 +59,7 @@ export default {
         const newAd = new Ad(
           payload.title,
           payload.description,
-          rootGetters.user.id,
+          rootGetters["user/user"].id,
           payload.imageSrc,
           payload.promo
         );
